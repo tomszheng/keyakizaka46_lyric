@@ -1,0 +1,35 @@
+%\documentclass[UTF8, fancyhdr,twoside]{ctexbook}
+\documentclass[UTF8,fancyhdr,onside]{ctexbook}
+
+%------------------------------------------------------------
+% 一些 用到的包 以及 相关设置
+\input{Packages_and_Settings/Packages_and_Settings.tex}
+
+%------------------------------------------------------------
+% 正文部分
+\begin{document}
+
+    \input{Cover/Cover.tex}
+
+    \begin{spacing}{1.3}
+
+        \input{ToC/ToC.tex}
+
+        \setcounter{page}{0}
+        \pagestyle{fancy}
+
+        % 查询歌词的网站，Edge浏览器下按F12，查找替换源码
+        % http://utaten.com/search/=/form_open=1
+
+        \input{Singles/1.tex}
+        \input{Singles/2.tex}
+        \input{Singles/3.tex}
+        \input{Singles/4.tex}
+        \input{SP/1.tex}
+
+        % `新增` 一页，这样的话 `之前` 的一页就有页眉和页脚了
+        \clearpage
+
+    \end{spacing}
+
+\end{document} 

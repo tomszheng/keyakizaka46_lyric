@@ -1,0 +1,46 @@
+﻿%---------------------------------------------------------------------------------
+% 下面几条与封面的一些间距参数相关
+
+% command to provide stretchy vertical space in proportion
+\newcommand\nbvspace[1][3]{\vspace*{\stretch{#1}}}
+
+% allow some slack to avoid under/overfull boxes
+\newcommand\nbstretchyspace{\spaceskip0.5em plus 0.25em minus 0.25em}
+
+% To improve spacing on titlepages
+\newcommand{\nbtitlestretch}{\spaceskip0.6em}
+
+%---------------------------------------------------------------------------------
+
+\clearpage
+
+　%这里有一个日文的空格字符，加上这个之后，文内的字符就都可以复制了!
+
+\pagestyle{empty}
+
+\begin{center}
+    \bfseries
+
+    \nbvspace[1]
+
+    \begin{center}
+    \Huge   {\nbtitlestretch \Huge
+                \texttt{The Lyric Book for} \\
+            }
+    \end{center}
+
+    \nbvspace[2]
+
+    \begin{center}
+        \includegraphics[height=2.7in]{Cover/logo.pdf}
+    \end{center}
+
+    \nbvspace[2]
+
+    \footnotesize 2017-04-22
+
+    \footnotesize v4.0
+
+    \nbvspace[2]
+
+\end{center} 

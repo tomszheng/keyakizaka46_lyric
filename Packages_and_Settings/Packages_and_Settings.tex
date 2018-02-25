@@ -1,0 +1,163 @@
+﻿%----------------------------------------------------------------------------
+% 设置页面的大小
+\setlength\paperheight{210mm}
+\setlength\paperwidth{148mm}
+
+%----------------------------------------------------------------------------
+% 设置页面的边距
+\usepackage{geometry}
+\geometry{left=1cm,right=1cm,top=2cm,bottom=2cm}
+
+%----------------------------------------------------------------------------
+% 用于使目录能被点击
+\usepackage[bookmarks=true,colorlinks,linkcolor=black]{hyperref}
+\renewcommand{\contentsname}{\centerline{mulu}}
+
+%----------------------------------------------------------------------------
+% 将 `第X章` -> `x`
+\CTEXsetup[name={,}, number=\arabic{chapter}]{chapter}
+
+%----------------------------------------------------------------------------
+% 双线页眉的设置
+\makeatletter %双线页眉
+\def\headrule{{\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi%
+\hrule\@height 0.5pt\@width\headwidth  %下面0.5pt粗
+\vskip-2\headrulewidth\vskip-1pt}      %两条线的距离1pt
+\vspace{6mm}}                          %双线与下面正文之间的垂直间距
+\makeatother
+
+%----------------------------------------------------------------------------
+% 对于中文的支持
+\usepackage{xeCJK}
+\renewcommand\CJKfamilydefault{\CJKsfdefault}
+\setCJKsansfont{SimSun} % 宋体
+%\setCJKsansfont{Microsoft YaHei} % 微软雅黑
+
+%----------------------------------------------------------------------------
+% 对于日文的支持
+\usepackage{zxjatype}
+\setjamainfont{ipaexm.ttf}
+
+%----------------------------------------------------------------------------
+% 对于注音的支持
+\usepackage[overlap,CJK]{ruby}
+
+%----------------------------------------------------------------------------
+% 用于行距修改
+\usepackage{setspace}
+
+%----------------------------------------------------------------------------
+% 晕倒，这是做什么用的，貌似不能少啊...  TomsZheng 2016-1-3
+\usepackage[english]{babel}
+
+%----------------------------------------------------------------------------
+% 使用多种颜色
+% 关于颜色可以上该网站上进行查询
+%     http://latexcolor.com/
+\usepackage[usenames,dvipsnames]{color}
+
+%----------------------------------------------------------------------------
+% 对花体的支持
+\usepackage{mathrsfs}
+
+%----------------------------------------------------------------------------
+% 修改章节号的样式
+% 用到了 `使用多种颜色` & `对花体的支持`
+
+\usepackage{titletoc}
+\usepackage[sf,sl,outermarks]{titlesec}
+
+%----------------------------------------------------------------------------
+% 用于在页面上绘图
+\usepackage{tikz}
+\usetikzlibrary{calc} %用于绘图时的相应坐标计算，这里我还没弄明白... 2016-1-11 TomsZheng
+
+%----------------------------------------------------------------------------
+% 用于 if-else表达、判断奇偶页
+\usepackage{ifthen,changepage}
+
+%----------------------------------------------------------------------------
+% 修改 Chapter 的样式，主要的生成效果请看生成的文档
+\titleformat{\chapter}[display]
+    {}
+    {\hfill \tikz[remember picture] \node[] (nr) {};
+    \begin{tikzpicture}[overlay,remember picture]
+        \coordinate (rightborder) at ($(nr)+(98,0)$);
+        \coordinate (right) at ($(nr.east) + (0,0)$);
+        \color{BrickRed} \draw[line width=3.5em] (right) -- (rightborder); % 这里的绘制方式还没弄明白 2016-1-11 TomsZheng
+    \end{tikzpicture}}
+    {-1ex}
+    {\filcenter\fontsize{30}{50}\selectfont}
+    [\vspace{-1ex}]
+
+% 修改 Section 的样式，主要的生成效果请看生成的文档
+\titleformat{\section}[display]
+    {}
+    {\hfill \tikz[remember picture]  \node[] (nr) at (0,0)  {};
+    \begin{tikzpicture}[remember picture,overlay]
+        \checkoddpage % 判断当前是处于奇数页还是偶数页，不同的情况下采用不同的 Style [针对 Section 而言]
+        \ifthenelse{\boolean{oddpage}}
+        {
+            \coordinate (rightborder) at ($(nr)+(100,0)$);
+            \coordinate (right) at ($(nr.west) + (0,0)$);
+            \color{Purple} \draw[line width=2.3em] (right) -- (rightborder); % 这里的绘制方式还没弄明白 2016-1-11 TomsZheng
+        }
+        {
+            \coordinate (leftborder) at ($(nr)-(\paperwidth-78,0)$);
+            \coordinate (left) at ($(nr.east)-(\paperwidth,0)$);
+            \color{ForestGreen} \draw[line width=2.3em] (left) -- (leftborder); % 这里的绘制方式还没弄明白 2016-1-11 TomsZheng
+        }
+    \end{tikzpicture}}
+    {-3.5ex}
+    {\filcenter\LARGE\selectfont}
+    [\vspace{0ex}]
+
+%----------------------------------------------------------------------------
+% 用于修改缩进模式
+\usepackage{indentfirst}
+\setlength{\parindent}{2em} % 首行缩进
+
+%----------------------------------------------------------------------------
+% 用于页眉与页脚的定制
+\usepackage{fancyhdr}
+
+\pagestyle{fancy} % 这一句一定不能少，否则下面的两句将不会生效
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+
+\fancyfoot{}
+\fancyfoot[EL,OR]{\thepage} % 奇偶页的页码在底部的不同位置
+
+\fancyhead{}
+\fancyhead[OR]{\nouppercase{\leftmark}} % 奇数页的 head 的右侧位置为歌手名
+\fancyhead[EL]{\nouppercase{\leftmark}} % 偶数页的 head 的左侧位置为歌手名
+\fancyhead[EC,OC]{\rightmark} % 奇偶页的 head 的居中位置为歌曲名
+
+%----------------------------------------------------------------------------
+% 用于对花体字母的支持
+\usepackage{mathrsfs}
+
+%----------------------------------------------------------------------------
+% 用于控制脚标的缩进
+\usepackage[hang,flushmargin]{footmisc}
+
+%----------------------------------------------------------------------------
+% 用于修改脚注的上标的颜色
+\renewcommand{\thefootnote}{\textcolor{ForestGreen}{\arabic{footnote}}}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+%----------------------------------------------------------------------------
+% 用于双语的对照
+
+\usepackage{parallel}	% bilingual text in two columns
+
+% Macros
+% ---------------
+\newcommand{\SecondLanguageSection}[1]{
+\begin{center}
+  \large{\textnormal{#1}}\normalfont\normalsize
+\end{center}
+}	% for the translated section title
